@@ -3,21 +3,9 @@
 
 //https://www.cise.ufl.edu/~nemo/cop3530/AVL-Tree-Rotations.pdf
 
-var TRAVERSAL = {
-  PREORDER: 1,
-  INORDER: 2,
-  POSTORDER: 3,
-};
 
-var DIRECTION = {
-  LEFT: "left",
-  RIGHT: "right"
-}
+var CONSTANTS = require("./constants");
 
-var HEAVY = {
-  LEFT: "left heavy",
-  RIGHT: "right heavy"
-}
 /***************************************
   NODE OBJECT WE USE TO CREATE OUR TREE
 ****************************************/
@@ -32,7 +20,11 @@ class treeNode {
         this.balance = newBalance;
         this.right = right || null;
     }
-    display() { console.log("> " +this.data + " height: " + this.height + ", balance: " + this.balance); }
+
+    display() {
+      //console.log("> " +this.data + " height: " + this.height + ", balance: " + this.balance);
+    }
+
     delete() {
         this.left = null;
         this.data = null;
@@ -46,15 +38,14 @@ class treeNode {
 
 // PRIVATE
 // O(n)
-function traverseSearch(number, node) {
+function traverseSearch(toFind, node) {
     if (node == null) return null;
-    _numOfStepsForSearch++;
 
-    if (number > node.data) {
-       return traverseSearch(number, node.right);
-    } else if (number < node.data ){
-       return traverseSearch(number, node.left);
-    } else if (number == node.data) {
+    if (toFind > node.data) {
+       return traverseSearch(toFind, node.right);
+    } else if (toFind < node.data ){
+       return traverseSearch(toFind, node.left);
+    } else if (toFind == node.data) {
        return node;
     }
 }
@@ -76,7 +67,7 @@ function balanceIt(node) {
 // PRIVATE
 // O(n)
 function updateBalanceAndHeightValuesForTree(node) {
-    console.log(" ∞ Reassign balance/height for (sub)tree at root: " + node.data);
+    //console.log(" ∞ Reassign balance/height for (sub)tree at root: " + node.data);
     if (node) {
         var rightHeight = balanceIt(node.right) + 1;
         var leftHeight = balanceIt(node.left) + 1;
@@ -145,12 +136,12 @@ function rotate(node, directionType) {
     var anchor = null;
     var toMove = node;
 
-    if (directionType == DIRECTION.LEFT) {
+    if (directionType == CONSTANTS.LEFT) {
         anchor = node.right;
         toMove.right = (anchor.left) ? anchor.left : null;
         anchor.left = toMove;
 
-    } else if (directionType == DIRECTION.RIGHT) {
+    } else if (directionType == CONSTANTS.RIGHT) {
         anchor = node.left;
         toMove.left = (anchor.right) ? anchor.right : null;
         anchor.right = toMove;
@@ -158,7 +149,7 @@ function rotate(node, directionType) {
 
     setHeightAndBalance(anchor);
     setHeightAndBalance(toMove);
-    console.log("å anchor: " + anchor.data);
+    //console.log("å anchor: " + anchor.data);
     return anchor;
 }
 
@@ -177,34 +168,36 @@ function nodeCountForTree(node) {
 function heaviness(node) {
     var leftHeight = 0; if (node.left) {leftHeight = getHeight(node.left)+1;}
     var rightHeight = 0; if (node.right) {rightHeight = getHeight(node.right)+1;}
+
     if (leftHeight == rightHeight) {
-      return (nodeCountForTree(node.left) > nodeCountForTree(node.right)) ? HEAVY.LEFT : HEAVY.RIGHT;
+      return (nodeCountForTree(node.left) > nodeCountForTree(node.right)) ? CONSTANTS.LEFT_HEAVY : CONSTANTS.RIGHT_HEAVY;
     }
-    return (leftHeight > rightHeight) ? HEAVY.LEFT : HEAVY.RIGHT;
+    return (leftHeight > rightHeight) ? CONSTANTS.LEFT_HEAVY : CONSTANTS.RIGHT_HEAVY;
 }
 
 // PRIVATE
 // O(n)
 function correctBalanceness(node) {
-    console.log("\nUnbalanceness detected at node: " + node.data);
+    //console.log("\nUnbalanceness detected at node: " + node.data);
 
-    if (heaviness(node) == HEAVY.LEFT) {
-      if (heaviness(node.left) == HEAVY.RIGHT) {
-         console.log("HEAVY left right (<) ");
-         node.left = rotate(node.left, DIRECTION.LEFT);
-         node = rotate(node, DIRECTION.RIGHT);
+    if (heaviness(node) == CONSTANTS.LEFT_HEAVY) {
+      if (heaviness(node.left) == CONSTANTS.RIGHT_HEAVY) {
+         //console.log("HEAVY left right (<) ");
+
+         node.left = rotate(node.left, CONSTANTS.LEFT);
+         node = rotate(node, CONSTANTS.RIGHT);
       } else {
-        console.log("HEAVY left left (/) ");
-        node = rotate(node, DIRECTION.RIGHT);
+        //console.log("HEAVY left left (/) ");
+        node = rotate(node, CONSTANTS.RIGHT);
       }
-    } else if (heaviness(node) == HEAVY.RIGHT){ // right heavy
-      if (heaviness(node.right) == HEAVY.LEFT) {
-          console.log("HEAVY right left (>)");
-          node.right = rotate(node.right, DIRECTION.RIGHT);
-          node = rotate(node, DIRECTION.LEFT);
+    } else if (heaviness(node) == CONSTANTS.RIGHT_HEAVY){ // right heavy
+      if (heaviness(node.right) == CONSTANTS.LEFT_HEAVY) {
+          //console.log("HEAVY right left (>)");
+          node.right = rotate(node.right, CONSTANTS.RIGHT);
+          node = rotate(node, CONSTANTS.LEFT);
       } else {
-          console.log("HEAVY right right (\\) ");
-          node = rotate(node, DIRECTION.LEFT);
+          //console.log("HEAVY right right (\\) ");
+          node = rotate(node, CONSTANTS.LEFT);
       }
     }
     return node;
@@ -223,7 +216,7 @@ function balanceTree(node) {
 // O(n)    for update height and balance after insertion
 function traverseInsertion(numberToInsert, node) {
     if (node == null) {
-      console.log("(+) Inserted leaf node: " + numberToInsert);
+      //console.log("(+) Inserted leaf node: " + numberToInsert);
       return new treeNode(null, numberToInsert, 0, 0, null);
     }
     if (numberToInsert > node.data) {
@@ -254,14 +247,14 @@ function countBalance(node, balancedCallBack) {
 // Checks to see if an unbalanceness exist in the tree
 // O(n)
 function checkForBalanceness (balancedTree) {
-    console.log("√ Check for Balanceness at node: " + balancedTree.data);
+    //console.log("√ Check for Balanceness at node: " + balancedTree.data);
     var balancenessExist = true;
     countBalance(balancedTree, function(balanced = true, node) {
         if (balanced == false) {
             balancenessExist = balanced
         }
     });
-    console.log("∆ Does Balance Exist? : " + balancenessExist);
+    //console.log("∆ Does Balance Exist? : " + balancenessExist);
     return balancenessExist;
 }
 
@@ -299,7 +292,7 @@ function deleteMinimum(node, removeCallBack) {
 // total - O(log n)
 function traverseRemove(number, node) {
     if (node == null) {
-        console.log("Ø You're at leaf end, null. Number " + number + " not found. :P )");
+        //console.log("Ø You're at leaf end, null. Number " + number + " not found. :P )");
         return null;
     }
     if (number > node.data) {
@@ -310,7 +303,7 @@ function traverseRemove(number, node) {
         return node;
     } else if (number == node.data) {
         if (noChildren(node)) {
-            console.log("Deleting node " + node.data + ", which HAS NO CHILDREN!");
+            //console.log("Deleting node " + node.data + ", which HAS NO CHILDREN!");
             node.delete(); return null;
         }
         if (leftChildOnly(node)) {
@@ -344,10 +337,10 @@ function findBadNode(node, nodeParent, callBack) {
 // PRIVATE
 // O(n)
 function remove(number, head) {
-  console.log("---------- Let's remove: " + number + " -----------------");
+  //console.log("---------- Let's remove: " + number + " -----------------");
   if (head) {
       if (head.data == number && rightChildOnly(head)) {
-          console.log("Removing " + number + ", right child only");
+          //console.log("Removing " + number + ", right child only");
           var temp = head; head = head.right; temp.delete();
           return head;
       }
@@ -361,7 +354,7 @@ function remove(number, head) {
       }
       return traverseRemove(number, head);
   } else {
-    console.log("Ø Empty tree. Nothing to remove");
+    //console.log("Ø Empty tree. Nothing to remove");
   }
 }
 
@@ -370,17 +363,22 @@ function remove(number, head) {
 // insert
 // delete
 // search
-var _head = null;
-class AVLTree {
+
+module.exports = class AVLTree {
 
     constructor () {
+        this._head = null; // root reference for this instance
         var _numOfStepsForSearch = 0;
-        this.geNumOfStepsForSearch = function() { return _numOfStepsForSearch; }
-        console.log(" Constructed AVLTree class ")
+        this.getNumOfStepsForSearch = function() { return _numOfStepsForSearch; }
+        //console.log(" Constructed AVLTree class ");
+    }
+
+    getHead() {
+      return this._head;
     }
 
     static CreateObject () {
-        console.log("Factory function returning you a fresh AVLTree instance.");
+        //console.log("Factory function returning you a fresh AVLTree instance.");
         return new AVLTree();
     }
 
@@ -388,27 +386,26 @@ class AVLTree {
     // returns you the node if found
     // null otherwise
     search (numberToFind) {
-       _numOfStepsForSearch = 0;
-       if (_head) { return traverseSearch(numberToFind, _head); }
+       if (this._head) { return traverseSearch(numberToFind, this._head); }
     }
 
     // PUBLIC
     // O(log n) for insertion
     // O(n) for updating heights and balance values
     insertAndBalance (number) {
-        if (_head == null) {
-            console.log("(+) Inserted node: " + number);
-            _head = new treeNode(null, number, 0, 0, null);
+        if (this._head == null) {
+            //console.log("(+) Inserted node: " + number);
+            this._head = new treeNode(null, number, 0, 0, null);
 
         } else {
-            if (number > _head.data) { _head.right = traverseInsertion(number, _head.right); }
-            else { _head.left = traverseInsertion(number, _head.left); }
+            if (number > this._head.data) { this._head.right = traverseInsertion(number, this._head.right); }
+            else { this._head.left = traverseInsertion(number, this._head.left); }
 
-            _head = balanceTree(_head);
-            console.log("!! Anytime you do rotation in the tree AFTER AN INSERTION, you must update balance and height of WHOLE tree !!");
-            updateBalanceAndHeightValuesForTree(_head);
-            checkForBalanceness(_head);
-            return _head;
+            this._head = balanceTree(this._head);
+            //console.log("!! Anytime you do rotation in the tree AFTER AN INSERTION, you must update balance and height of WHOLE tree !!");
+            this._head = updateBalanceAndHeightValuesForTree(this._head);
+            checkForBalanceness(this._head);
+            return this._head;
         }
     }
 
@@ -418,38 +415,45 @@ class AVLTree {
     // O(n) for balancing tree
     // O(n) + O(n) = 2 * O(n), which is O(n)
     removeAndBalance(value) {
-        var node = remove(value, _head);
-        if (node == null) { console.log("Ø TREE EMPTY NOW. NOTHING to rebalance or fix"); _head = null; return; }
-        if (singleNodeLeft(node)) { _head = node; }
 
-        console.log("◊ After removing value: " + value + ", let's update balance and height");
-        updateBalanceAndHeightValuesForTree(node); // THIS IS NEEDED
+        var node = remove(value, this._head);
+        if (node == null) {
+            //console.log("Ø TREE EMPTY NOW. NOTHING to rebalance or fix");
+            this._head = null; return;
+        }
+        if (singleNodeLeft(node)) { this._head = node; }
+
+        //console.log("◊ After removing value: " + value + ", let's update balance and height");
+
+        node = updateBalanceAndHeightValuesForTree(node); // THIS IS NEEDED
+
+        var self = this; // for accessing context inside a callback
 
         while (checkForBalanceness(node) == false) { // while its un balanced, we find bad node.
             findBadNode(node, null, function(badNode, parentNode) {
-                console.log("(X) FOUND BAD NODE AT: " + badNode.data);
+                //console.log("(X) FOUND BAD NODE AT: " + badNode.data);
 
                 if (parentNode) {
-                    console.log("nodeParent exists, PARENT NODE IS: " + parentNode.data);
+                    //console.log("nodeParent exists, PARENT NODE IS: " + parentNode.data);
                     if (parentNode.left === badNode) {
-                        console.log(parentNode.data + " left points to " + badNode.data);
+                        //console.log(parentNode.data + " left points to " + badNode.data);
                         parentNode.left = balanceTree(badNode);
                     } else {
                         parentNode.right = balanceTree(badNode);
                     }
                 } else { // nodeParent does not exist, which means we are at ROOT!
-                    console.log("No nodeParent, (X) FOUND BAD NODE AT: " + badNode.data);
-                    _head = balanceTree(badNode);
+                    //console.log("No nodeParent, (X) FOUND BAD NODE AT: " + badNode.data);
+                    self._head = balanceTree(badNode);
                 }
 
-                console.log("!! Anytime you do rotation in the tree AFTER A REMOVAL, you must update balance and height of WHOLE tree !!");
-                updateBalanceAndHeightValuesForTree(_head);
-                checkForBalanceness(_head);
+                //console.log("!! Anytime you do rotation in the tree AFTER A REMOVAL, you must update balance and height of WHOLE tree !!");
+                self._head = updateBalanceAndHeightValuesForTree(self._head);
+                checkForBalanceness(self._head);
             }); // findBadNode
         } // while
 
-        console.log("All done");
-        console.log(_head.data);
+        //console.log("All done");
+        //console.log(this._head.data);
     } //removeAndBalance
 
 
@@ -457,142 +461,28 @@ class AVLTree {
     inOrderPrint(node) {
         if (node == null) return;
         this.inOrderPrint(node.left);
-        if (_head == node) {
-          console.log("===============  HEAD  ==================");
+        if (this._head == node) {
+          //console.log("===============  HEAD  ==================");
         }
         node.display();
-        if (_head == node) {
-          console.log("=============================================")
+        if (this._head == node) {
+          //console.log("=============================================")
         }
         this.inOrderPrint(node.right);
     }
 
     // PUBLIC
     print(traversalType) {
-        console.log("--------------------------------  TREE DISPLAY  --------------------------------");
+        //console.log("--------------------------------  TREE DISPLAY  --------------------------------");
 
-        if (_head) {
+        if (this._head) {
           switch (traversalType) {
-              case TRAVERSAL.INORDER: this.inOrderPrint(_head); break;
+              case CONSTANTS.INORDER: this.inOrderPrint(this._head); break;
             default:
           }
-        } else { console.log("Nothing to display. Empty Tree") }
+        } else {
+          //console.log("Nothing to display. Empty Tree")
+        }
     }
 
 } // end of AVLTree
-
-
-var avl = AVLTree.CreateObject();
-
-/*
-// test case 1 OK
-avl.insertAndBalance(5);
-avl.insertAndBalance(2);
-avl.insertAndBalance(8);
-avl.insertAndBalance(1);
-avl.insertAndBalance(3);
-avl.insertAndBalance(7);
-avl.insertAndBalance(10);
-avl.insertAndBalance(4);
-avl.insertAndBalance(6);
-avl.insertAndBalance(9);
-avl.insertAndBalance(11);
-avl.insertAndBalance(12);
-avl.print(TRAVERSAL.INORDER);
-avl.removeAndBalance(1);
-avl.print(TRAVERSAL.INORDER);
-*/
-
-
-/*
-// test case 2 OK
-avl.insertAndBalance(6);
-avl.insertAndBalance(2);
-avl.insertAndBalance(9);
-avl.insertAndBalance(1);
-avl.insertAndBalance(4);
-avl.insertAndBalance(8);
-avl.insertAndBalance(11);
-avl.insertAndBalance(3);
-avl.insertAndBalance(5);
-avl.insertAndBalance(7);
-avl.insertAndBalance(10);
-avl.insertAndBalance(13);
-avl.insertAndBalance(14);
-avl.print(TRAVERSAL.INORDER);
-avl.removeAndBalance(5);
-avl.removeAndBalance(3);
-avl.print(TRAVERSAL.INORDER);
-*/
-
-
-/*
-// test case 3 OK
-
-avl.insertAndBalance(20);
-avl.insertAndBalance(4);
-avl.insertAndBalance(26);
-avl.insertAndBalance(3);
-avl.insertAndBalance(9);
-avl.insertAndBalance(21);
-avl.insertAndBalance(30);
-avl.insertAndBalance(2);
-avl.insertAndBalance(7);
-avl.insertAndBalance(11);
-avl.insertAndBalance(15);
-avl.print(TRAVERSAL.INORDER);
-
-avl.removeAndBalance(30);
-avl.removeAndBalance(20);
-avl.removeAndBalance(15);
-avl.removeAndBalance(26);
-avl.removeAndBalance(11);
-avl.removeAndBalance(2);
-avl.removeAndBalance(9);
-avl.removeAndBalance(3);
-avl.removeAndBalance(4);
-avl.removeAndBalance(7);
-avl.removeAndBalance(21);
-avl.print(TRAVERSAL.INORDER);
-*/
-
-/*
-// test case 4 OK
-avl.insertAndBalance(90);
-avl.insertAndBalance(80);
-avl.insertAndBalance(200);
-avl.insertAndBalance(70);
-avl.insertAndBalance(100);
-avl.insertAndBalance(300);
-avl.insertAndBalance(95);
-avl.insertAndBalance(310);
-avl.insertAndBalance(110);
-avl.insertAndBalance(305);
-avl.print(TRAVERSAL.INORDER);
-
-avl.removeAndBalance(70);
-avl.removeAndBalance(310);
-avl.removeAndBalance(300);
-avl.removeAndBalance(110);
-avl.removeAndBalance(200);
-avl.removeAndBalance(305);
-avl.print(TRAVERSAL.INORDER);
-*/
-
-
-// TEST CASE 5
-/*
-avl.insertAndBalance(45);
-avl.insertAndBalance(100);
-avl.insertAndBalance(90);
-avl.insertAndBalance(110);
-avl.insertAndBalance(85);
-avl.insertAndBalance(86);
-avl.insertAndBalance(87);
-avl.insertAndBalance(89);
-avl.insertAndBalance(88);
-avl.print(TRAVERSAL.INORDER);
-avl.removeAndBalance(110);
-avl.removeAndBalance(87);
-avl.print(TRAVERSAL.INORDER);
-*/
