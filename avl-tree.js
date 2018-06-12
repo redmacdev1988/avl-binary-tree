@@ -22,7 +22,7 @@ class treeNode {
     }
 
     display() {
-      //console.log("> " +this.data + " height: " + this.height + ", balance: " + this.balance);
+      console.log("> " +this.data + " height: " + this.height + ", balance: " + this.balance);
     }
 
     delete() {
@@ -56,7 +56,7 @@ function traverseSearch(toFind, node) {
 // PRIVATE
 // O(n)
 function balanceIt(node) {
-    if (node == null) { return -1; }
+    if (node === null) { return -1; }
     var rightHeight = balanceIt(node.right) + 1;
     var leftHeight = balanceIt(node.left) + 1;
     node.height = (leftHeight > rightHeight) ? leftHeight : rightHeight;
@@ -205,7 +205,7 @@ function correctBalanceness(node) {
 
 // PRIVATE
 // O(n)
-function balanceTree(node) {
+function balanceNode(node) {
     node = updateHeightAndBalanceForSingleNode(node);
     return (node.balance >= 2) ? correctBalanceness(node) : node;
 }
@@ -224,7 +224,7 @@ function traverseInsertion(numberToInsert, node) {
     } else {
         node.left = traverseInsertion(numberToInsert, node.left);
     }
-    return balanceTree(node);
+    return balanceNode(node);
 }
 
 /*********** BALANCENESS OF A TREE *************/
@@ -269,7 +269,10 @@ function bothChildExist(node) { return (node.left != null && node.right != null)
 function singleNodeLeft(node) { return ((node) && node.left == null && node.right == null); }
 // PRIVATE
 // Finds the minimum of sub-tree and delete it
+
+// when both nodes exist
 // You can get rightmost of left subtree, or leftmost of right subtree
+// in our case, we got leftmost of the right subtree
 // O (log n)
 function deleteMinimum(node, removeCallBack) {
     if (noChildren(node)) {
@@ -313,6 +316,8 @@ function traverseRemove(number, node) {
             var rightNodeRef = node.right; node.delete(); return rightNodeRef;
         }
         if (bothChildExist(node)) {
+          // we get leftmost of the right subtree.
+          // note: you can also implement right most of the left subtree.
             var nodeToDelete;
             node.right = deleteMinimum(node.right, function(toRemove){
                 node.data = toRemove.data;
@@ -394,18 +399,17 @@ module.exports = class AVLTree {
     // O(n) for updating heights and balance values
     insertAndBalance (number) {
         if (this._head == null) {
-            //console.log("(+) Inserted node: " + number);
             this._head = new treeNode(null, number, 0, 0, null);
-
         } else {
-            if (number > this._head.data) { this._head.right = traverseInsertion(number, this._head.right); }
-            else { this._head.left = traverseInsertion(number, this._head.left); }
-
-            this._head = balanceTree(this._head);
+            if (number > this._head.data) {
+              this._head.right = traverseInsertion(number, this._head.right);
+            }
+            else {
+              this._head.left = traverseInsertion(number, this._head.left);
+            }
+            this._head = balanceNode(this._head);
             //console.log("!! Anytime you do rotation in the tree AFTER AN INSERTION, you must update balance and height of WHOLE tree !!");
-            this._head = updateBalanceAndHeightValuesForTree(this._head);
-            checkForBalanceness(this._head);
-            return this._head;
+            return updateBalanceAndHeightValuesForTree(this._head);
         }
     }
 
@@ -437,13 +441,13 @@ module.exports = class AVLTree {
                     //console.log("nodeParent exists, PARENT NODE IS: " + parentNode.data);
                     if (parentNode.left === badNode) {
                         //console.log(parentNode.data + " left points to " + badNode.data);
-                        parentNode.left = balanceTree(badNode);
+                        parentNode.left = balanceNode(badNode);
                     } else {
-                        parentNode.right = balanceTree(badNode);
+                        parentNode.right = balanceNode(badNode);
                     }
                 } else { // nodeParent does not exist, which means we are at ROOT!
                     //console.log("No nodeParent, (X) FOUND BAD NODE AT: " + badNode.data);
-                    self._head = balanceTree(badNode);
+                    self._head = balanceNode(badNode);
                 }
 
                 //console.log("!! Anytime you do rotation in the tree AFTER A REMOVAL, you must update balance and height of WHOLE tree !!");
@@ -459,14 +463,19 @@ module.exports = class AVLTree {
 
     // PUBLIC
     inOrderPrint(node) {
-        if (node == null) return;
+      //console.log(`call inOrderPrint`)
+        if (node === null) {
+          //console.log(`inOrderPrint: empty tree`);
+          return;
+        }
+
         this.inOrderPrint(node.left);
         if (this._head == node) {
-          //console.log("===============  HEAD  ==================");
+          console.log("===============  HEAD  ==================");
         }
         node.display();
         if (this._head == node) {
-          //console.log("=============================================")
+          console.log("=============================================")
         }
         this.inOrderPrint(node.right);
     }
@@ -477,11 +486,14 @@ module.exports = class AVLTree {
 
         if (this._head) {
           switch (traversalType) {
-              case CONSTANTS.INORDER: this.inOrderPrint(this._head); break;
+              case CONSTANTS.INORDER:
+              console.log(`CONSTANTS.INORDER`)
+              this.inOrderPrint(this._head);
+              break;
             default:
           }
         } else {
-          //console.log("Nothing to display. Empty Tree")
+          console.log("Nothing to display. Empty Tree")
         }
     }
 
