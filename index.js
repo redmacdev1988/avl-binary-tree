@@ -1,9 +1,35 @@
 "use strict";
 
+var moment = require('moment');
+
 var AVLTree = require("./avl-tree.js");
 var CONSTANTS = require("./constants.js");
-
 var avl = AVLTree.CreateObject();
+
+// moment js tests
+let a = moment("12-25-1995", "MM-DD-YYYY");
+let b = moment("12-26-1995", "MM-DD-YYYY");
+avl.insertAndBalance(a);
+avl.insertAndBalance(b);
+avl.print(CONSTANTS.INORDER);
+let res = avl.search(a);
+console.log('found data: ' + res.data.toString());
+
+/*
+// TEST: alphabet sort and reverse sort 
+avl.insertAndBalance('ricky');
+avl.insertAndBalance('joy');
+avl.insertAndBalance('james');
+avl.insertAndBalance('stephen');
+avl.insertAndBalance('brian');
+avl.insertAndBalance('ellen');
+avl.insertAndBalance('emman');
+avl.insertAndBalance('alex');
+//avl.print(CONSTANTS.REVERSE_PRINT); // reverse alphabetical
+//avl.print(CONSTANTS.INORDER); // alphabetical
+let res = avl.search('ellen');
+console.log('found data: ' + res.data);
+*/
 
 /*
 // test case 1 OK
@@ -20,11 +46,10 @@ avl.insertAndBalance(9);
 avl.insertAndBalance(11);
 avl.insertAndBalance(12);
 avl.print(CONSTANTS.INORDER);
+
+avl.removeAndBalance(1);
+avl.print(CONSTANTS.INORDER);
 */
-//avl.removeAndBalance(1);
-//avl.print(CONSTANTS.INORDER);
-
-
 
 /*
 // test case 2 OK

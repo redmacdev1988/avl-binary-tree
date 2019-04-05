@@ -1,9 +1,7 @@
-
-"use strict";
-
 //https://www.cise.ufl.edu/~nemo/cop3530/AVL-Tree-Rotations.pdf
 
-
+"use strict";
+var moment = require('moment');
 var CONSTANTS = require("./constants");
 
 /***************************************
@@ -22,7 +20,11 @@ class treeNode {
     }
 
     display() {
-      console.log("> " +this.data + " height: " + this.height + ", balance: " + this.balance);
+      if (moment.isMoment(this.data)) {
+        console.log("> " +this.data.toString() + " height: " + this.height + ", balance: " + this.balance);
+      } else {
+        console.log("> " +this.data + " height: " + this.height + ", balance: " + this.balance);
+      }
     }
 
     delete() {
@@ -39,15 +41,38 @@ class treeNode {
 // PRIVATE
 // O(n)
 function traverseSearch(toFind, node) {
-    if (node == null) return null;
 
-    if (toFind > node.data) {
-       return traverseSearch(toFind, node.right);
-    } else if (toFind < node.data ){
-       return traverseSearch(toFind, node.left);
-    } else if (toFind == node.data) {
-       return node;
+    if (node == null) return null;
+    if (_isNumber(toFind, node.data)) {
+
+        if (toFind > node.data) {
+            return traverseSearch(toFind, node.right);
+         } else if (toFind < node.data ){
+            return traverseSearch(toFind, node.left);
+         } else if (toFind == node.data) {
+            return node;
+         }
+
+    } else if (_isString(toFind, node.data)) {
+
+        if (toFind.localeCompare(node.data) > 0) {
+            return traverseSearch(toFind, node.right);
+         } else if (toFind.localeCompare(node.data) < 0){
+            return traverseSearch(toFind, node.left);
+         } else if (toFind.localeCompare(node.data) == 0) {
+            return node;
+         }
+
+    } else if (_isMoment(toFind, node.data)) {
+        if (toFind.isAfter(node.data)) {
+            return traverseSearch(toFind, node.right);
+        } else if (toFind.isBefore(node.data)){
+           return traverseSearch(toFind, node.left);
+        } else if (toFind.isSame(node.data)) {
+           return node;
+        }
     }
+    return node;
 }
 
 
@@ -210,20 +235,46 @@ function balanceNode(node) {
     return (node.balance >= 2) ? correctBalanceness(node) : node;
 }
 
+function _isNumber(data1, data2) {
+    return (typeof data1 === 'number' && typeof data2 === 'number');
+}
+
+function _isString(data1, data2) {
+    return (typeof data1 === 'string' && typeof data2 === 'string');
+}
+
+function _isMoment(date1, date2) {
+    return (moment.isMoment(date1) && moment.isMoment(date2));
+}
 
 // PRIVATE
 // O(log n)  for insertion
 // O(n)    for update height and balance after insertion
-function traverseInsertion(numberToInsert, node) {
+function traverseInsertion(dataToInsert, node) {
     if (node == null) {
       //console.log("(+) Inserted leaf node: " + numberToInsert);
-      return new treeNode(null, numberToInsert, 0, 0, null);
+      return new treeNode(null, dataToInsert, 0, 0, null);
     }
-    if (numberToInsert > node.data) {
-        node.right = traverseInsertion(numberToInsert, node.right);
-    } else {
-        node.left = traverseInsertion(numberToInsert, node.left);
+    if (_isNumber(dataToInsert, node.data)) {
+        if (dataToInsert > node.data) { // number uses greater or less
+            node.right = traverseInsertion(dataToInsert, node.right);
+        } else {
+            node.left = traverseInsertion(dataToInsert, node.left);
+        }
+    } else if (_isString(dataToInsert, node.data)) { 
+        if (dataToInsert.localeCompare(node.data) > 0) {
+            node.right = traverseInsertion(dataToInsert, node.right);
+        } else {
+            node.left = traverseInsertion(dataToInsert, node.left);
+        }
+    } else if (_isMoment(dataToInsert, node.data)) {
+        if (dataToInsert.isAfter(node.data)) {
+            node.right = traverseInsertion(dataToInsert, node.right);
+        } else {
+            node.left = traverseInsertion(dataToInsert, node.left);
+        }
     }
+
     return balanceNode(node);
 }
 
@@ -390,22 +441,22 @@ module.exports = class AVLTree {
     // PUBLIC
     // returns you the node if found
     // null otherwise
-    search (numberToFind) {
-       if (this._head) { return traverseSearch(numberToFind, this._head); }
+    search (dataToFind) {
+       if (this._head) { return traverseSearch(dataToFind, this._head); }
     }
 
     // PUBLIC
     // O(log n) for insertion
     // O(n) for updating heights and balance values
-    insertAndBalance (number) {
+    insertAndBalance (data) {
         if (this._head == null) {
-            this._head = new treeNode(null, number, 0, 0, null);
+            this._head = new treeNode(null, data, 0, 0, null);
         } else {
-            if (number > this._head.data) {
-              this._head.right = traverseInsertion(number, this._head.right);
+            if (data > this._head.data) {
+              this._head.right = traverseInsertion(data, this._head.right);
             }
             else {
-              this._head.left = traverseInsertion(number, this._head.left);
+              this._head.left = traverseInsertion(data, this._head.left);
             }
             this._head = balanceNode(this._head);
             //console.log("!! Anytime you do rotation in the tree AFTER AN INSERTION, you must update balance and height of WHOLE tree !!");
@@ -481,15 +532,49 @@ module.exports = class AVLTree {
     }
 
     // PUBLIC
+    postOrderPrint(node) {
+        if (node === null) {
+        //console.log(`inOrderPrint: empty tree`);
+            return;
+        }
+
+        this.postOrderPrint(node.left);
+        this.postOrderPrint(node.right);
+
+        if (this._head == node) {
+        console.log("===============  HEAD  ==================");
+        }
+        node.display();
+        if (this._head == node) {
+        console.log("=============================================")
+        }
+    }
+
+    reversePrint(node) {
+        if (node === null) {return;}
+        this.reversePrint(node.right);
+        node.display();
+        this.reversePrint(node.left);
+    }
+
+    // PUBLIC
     print(traversalType) {
         //console.log("--------------------------------  TREE DISPLAY  --------------------------------");
 
         if (this._head) {
           switch (traversalType) {
-              case CONSTANTS.INORDER:
-              console.log(`CONSTANTS.INORDER`)
-              this.inOrderPrint(this._head);
-              break;
+            case CONSTANTS.INORDER:
+                console.log(`CONSTANTS.INORDER`)
+                this.inOrderPrint(this._head);
+                break;
+            case CONSTANTS.POSTORDER:
+                console.log(`CONSTANTS.POSTORDER`)
+                this.postOrderPrint(this._head);
+                break;
+            case CONSTANTS.REVERSE_PRINT:
+                console.log(`CONSTANTS.REVERSE_PRINT`)
+                this.reversePrint(this._head);
+                break;
             default:
           }
         } else {

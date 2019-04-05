@@ -7,5 +7,6 @@ module.exports = {
   LEFT_HEAVY: 4,
   RIGHT_HEAVY: 5,
   LEFT: 6,
-  RIGHT: 7
+  RIGHT: 7,
+  REVERSE_PRINT: 8,
 };
