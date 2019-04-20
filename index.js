@@ -6,14 +6,62 @@ var AVLTree = require("./avl-tree.js");
 var CONSTANTS = require("./constants.js");
 var avl = AVLTree.CreateObject();
 
+/*
+console.time("timer");
+
 // moment js tests
 let a = moment("12-25-1995", "MM-DD-YYYY");
 let b = moment("12-26-1995", "MM-DD-YYYY");
+
 avl.insertAndBalance(a);
 avl.insertAndBalance(b);
 avl.print(CONSTANTS.INORDER);
 let res = avl.search(a);
 console.log('found data: ' + res.data.toString());
+
+console.timeEnd("timer");
+
+*/
+
+
+let toFind = null;
+
+console.time("Build Array");
+
+var jsArray = [];
+
+for ( let i = 0; i < 10000; i++) {
+    //console.time("random");
+    let r = Math.random().toString(36).substring(2);
+    //console.timeEnd("random");
+
+    //console.log("inserting: ", r);
+    if ( i == 6680) {
+        toFind = r;
+    }
+
+    //console.time("insertAndBalance");
+    //avl.insertAndBalance(r);
+    jsArray.push(r);
+    //console.timeEnd("insertAndBalance");
+}
+
+console.timeEnd("Build Array");
+
+//avl.print(CONSTANTS.INORDER); // alphabetical
+
+
+
+console.time("search for ");
+let result = jsArray.findIndex(function(value){
+    return value === toFind;
+});
+console.log('result: ' + result);
+console.timeEnd("search for ");
+
+// 1126.827ms
+// 0.215 ms
+
 
 /*
 // TEST: alphabet sort and reverse sort 
