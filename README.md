@@ -59,17 +59,22 @@ If the node's balance is 2, this means there the left subtree is heavy. We then 
 
 If they are, we need to rotate them accordingly. 
 
-To rotate '/': Simply rotate the right most node (which is largest) down. Then hang the right subtree of the middle node onto the left side of the right most node. 
+###To rotate '/': 
+
+Simply rotate the right most node (which is largest) down. Then hang the right subtree of the middle node onto the left side of the right most node. 
 
 ![Rotate /](http://chineseruleof8.com/wp-content/uploads/2016/06/rotation.jpg)
 
 
-To rotate '<':
+###To rotate '<':
+
 ![Rotate <](http://chineseruleof8.com/wp-content/uploads/2016/06/less-than-correct-balance.jpg)
 
-To rotate '\':
+###To rotate '\':
 
-To rotate '>':
+
+###To rotate '>':
+
 ![Rotate >](http://chineseruleof8.com/wp-content/uploads/2016/06/more-than-correct-balance-754x1024.jpg)
 
 
