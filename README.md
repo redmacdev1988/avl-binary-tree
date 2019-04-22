@@ -83,6 +83,8 @@ Simply rotate the LEFT most node (which is largest) down. Then hang the LEFT sub
 ![Rotate >](http://chineseruleof8.com/wp-content/uploads/2016/06/more-than-correct-balance-754x1024.jpg)
 
 
+> Keep in mind that after the rotation, we need to recalculate the height of the two nodes that have been rotated. This time, you cannot simply use max(left, right) + 1. You must do a recusive calculation of the height.
+
 ###### running time
 It is O( log n )  for the insertion
 The running time of 1 insertion:
