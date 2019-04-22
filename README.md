@@ -44,13 +44,31 @@ Also, note that if you only have one node, its children are null and null. make 
 
 - update node's balance. 
 
+Node's balance is simply getting the height of the left node, minus the height of the right node.
+This indicates which subtree is heavier.
+
+3) Once you've updated the height and balance, we check to see if there's an imbalance.
+
+Imbalance means the current node's balance >= 2 or balance <= -2.
+
+If the node's balance is 2, this means there the left subtree is heavy. We then check to see if that subtree is heavy on the left or right. The whole purpose of this is to check if the nodes are in the shape of
+'/' or '<'.
+
+If they are, we need to rotate them accordingly. 
+To rotate '/':
+
+To rotate '<':
+![Rotate <](http://chineseruleof8.com/wp-content/uploads/2016/06/less-than-correct-balance.jpg)
+
+To rotate '\':
+
+To rotate '>':
+![Rotate >](http://chineseruleof8.com/wp-content/uploads/2016/06/more-than-correct-balance-754x1024.jpg)
+
+
+######  running time
 / O( log n )  for the insertion
 // running time of 1 insertion:
 // O( log n) , for updating the heights up to the root
 // O( log n ) for binary recursion of inserting
 // Thus, each insertion is O( log n )
-
-// 1) BST standard insert to the end
-// before you recurse back up:
-// 2) update node's height 
-// 3) update node's balance. Balance it with rotate if unbalanced
