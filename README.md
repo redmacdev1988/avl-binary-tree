@@ -83,9 +83,12 @@ Simply rotate the LEFT most node (which is largest) down. Then hang the LEFT sub
 ![Rotate >](http://chineseruleof8.com/wp-content/uploads/2016/06/more-than-correct-balance-754x1024.jpg)
 
 
-######  running time
-/ O( log n )  for the insertion
-// running time of 1 insertion:
-// O( log n) , for updating the heights up to the root
-// O( log n ) for binary recursion of inserting
-// Thus, each insertion is O( log n )
+###### running time
+It is O( log n )  for the insertion
+The running time of 1 insertion:
+
+* O( log n) for updating the heights up to the root
+* O( log n ) for binary recursion of inserting
+* O( 1 ) for updates on height and balance of nodes
+
+Thus, each insertion is O( log n )
