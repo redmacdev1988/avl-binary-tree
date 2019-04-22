@@ -61,7 +61,8 @@ If they are, we need to rotate them accordingly.
 
 ### To rotate '/': 
 
-Simply rotate the right most node (which is largest) down. Then hang the right subtree of the middle node onto the left side of the right most node. 
+So we have an imbalance at node 70. It has a balance of +2.
+Simply rotate the RIGHT most node (which is largest) down. Then hang the RIGHT subtree of the middle node onto the LEFT side of the LEFT most node. 
 
 ![Rotate /](http://chineseruleof8.com/wp-content/uploads/2016/06/rotation.jpg)
 
@@ -70,8 +71,12 @@ Simply rotate the right most node (which is largest) down. Then hang the right s
 
 ![Rotate <](http://chineseruleof8.com/wp-content/uploads/2016/06/less-than-correct-balance.jpg)
 
-### To rotate '\':
+### To rotate '\\':
 
+![Rotate \\](http://chineseruleof8.com/wp-content/uploads/2016/06/rotate.jpg )
+
+We have an imbalance at node 70.. It has a balance of -2.
+Simply rotate the LEFT most node (which is largest) down. Then hang the LEFT subtree of the middle node (60) onto the RIGHT side of the RIGHT most node. 
 
 ### To rotate '>':
 
