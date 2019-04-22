@@ -54,8 +54,15 @@ Imbalance means the current node's balance >= 2 or balance <= -2.
 If the node's balance is 2, this means there the left subtree is heavy. We then check to see if that subtree is heavy on the left or right. The whole purpose of this is to check if the nodes are in the shape of
 '/' or '<'.
 
+![Check for Imbalance](http://chineseruleof8.com/wp-content/uploads/2016/06/imbalance-e1555903534602.jpg)
+
+
 If they are, we need to rotate them accordingly. 
-To rotate '/':
+
+To rotate '/': Simply rotate the right most node (which is largest) down. Then hang the right subtree of the middle node onto the left side of the right most node. 
+
+![Rotate /](http://chineseruleof8.com/wp-content/uploads/2016/06/rotation.jpg)
+
 
 To rotate '<':
 ![Rotate <](http://chineseruleof8.com/wp-content/uploads/2016/06/less-than-correct-balance.jpg)
