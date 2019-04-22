@@ -27,9 +27,9 @@ In order to remedy this, the AVL tree solves this problem by reconfiguring the t
 
 1) do a standard BST insertion at the end of a branch
 
-before you recurse back up
+2) before you recurse back up
 
-2) update the node's height. 
+- update the node's height. 
 
 The rules of height is:
 
@@ -37,12 +37,12 @@ Node with nothing below is considered to have a height of 0.
 Node with one node below is considered to have a height of 1.
 Thus, the height of a node, is how many vertices it has.
 
-Thus, you calculate the height of the node by +1 to the height of its child with the bigger height.
+You calculate the height of the node by +1 to the height of its child with the bigger height.
 Also, note that if you only have one node, its children are null and null. make sure to return -1 from these nulls so that the height of the node is 1 + - 1 = 0.
 
-![Test Results](http://chineseruleof8.com/wp-content/uploads/2016/06/subtree-height.jpg)
+![Test Results](http://chineseruleof8.com/wp-content/uploads/2016/06/subtree-height-e1555899574856.jpg)
 
-3) update node's balance. 
+- update node's balance. 
 
 / O( log n )  for the insertion
 // running time of 1 insertion:
