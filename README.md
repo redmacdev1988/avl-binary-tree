@@ -23,7 +23,7 @@ For example, we create a tree out of a group of data that is sorted, say 1, 2, 3
 
 In order to remedy this, the AVL tree solves this problem by reconfiguring the tree via rotating nodes.
 
-### Insertion
+# Insertion
 
 1) do a standard BST insertion at the end of a branch
 
@@ -94,3 +94,7 @@ The running time of 1 insertion:
 * O( 1 ) for updates on height and balance of nodes
 
 Thus, each insertion is O( log n )
+
+
+# Deletion
+
