@@ -100,7 +100,7 @@ Thus, each insertion is O( log n )
 
 Standard BST deletion involves 4 situations:
 
-![Rotate >](http://chineseruleof8.com/wp-content/uploads/2016/06/bst_deletion.jpg)
+![Rotate >](http://chineseruleof8.com/wp-content/uploads/2016/06/more-than-correct-balance.jpg)
 
 1) If there is no children, we just return null and propogate back up the recursion. The previous reference will point to null.
 
@@ -114,5 +114,4 @@ Standard BST deletion involves 4 situations:
 - Copy the value from that node to the current node that needs to be deleted.
 - Then remove the node.
 
-
-
+![BST Deletion](http://chineseruleof8.com/wp-content/uploads/2016/06/bst_deletion.jpg)
