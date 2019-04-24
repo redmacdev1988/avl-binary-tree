@@ -98,3 +98,21 @@ Thus, each insertion is O( log n )
 
 # Deletion
 
+Standard BST deletion involves 4 situations:
+
+![Rotate >](http://chineseruleof8.com/wp-content/uploads/2016/06/bst_deletion.jpg)
+
+1) If there is no children, we just return null and propogate back up the recursion. The previous reference will point to null.
+
+2) If there is a left child node and right child is null, return the left child node. It will propogate back up recursively and the previous reference will point to the left child node.
+
+3) If there is a right child node and the left child is null, return the right child node. It will propogate back up recursively and the previous reference will point to the right child node.
+
+4) If both have nodes, 
+
+- get the value from the left most node of the right subtree, or right most node of the left subtree.
+- Copy the value from that node to the current node that needs to be deleted.
+- Then remove the node.
+
+
+

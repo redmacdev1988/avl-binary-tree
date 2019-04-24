@@ -17,7 +17,6 @@ class TreeNode {
     }
 
     delete() {
-        //console.log(`deleting node: ${this.data}`);
         this.left = null;
         this.data = null;
         this.height = null;
@@ -255,7 +254,6 @@ function clear(node) {
 
     node.delete();
     node = null;
-    //console.log(node);
 }
 
 module.exports = class AVLTree2 {
@@ -323,12 +321,3 @@ module.exports = class AVLTree2 {
         }
     }
 }
-
-/*
-let avl = new AVLTree2();
-console.time("timer");
-for ( let i = 0; i < 100000; i++){
-    avl.insert(Math.ceil(Math.random() * new Date().getTime()));
-}
-console.timeEnd("timer");
-*/
