@@ -114,4 +114,4 @@ Standard BST deletion involves 4 situations:
 - Copy the value from that node to the current node that needs to be deleted.
 - Then remove the node.
 
-![BST Deletion](http://chineseruleof8.com/wp-content/uploads/2016/06/bst_deletion.jpg)
+![BST Deletion](http://chineseruleof8.com/wp-content/uploads/2016/06/bst_deletion-739x1024.jpg)
