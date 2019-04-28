@@ -108,10 +108,12 @@ Standard BST deletion involves 4 situations:
 
 3) If there is a right child node and the left child is null, return the right child node. It will propogate back up recursively and the previous reference will point to the right child node.
 
-4) If both have nodes, 
+4) If both child nodes exist, 
 
-- get the value from the left most node of the right subtree, or right most node of the left subtree.
-- Copy the value from that node to the current node that needs to be deleted.
-- Then remove the node.
+- a) get the value from the left most node of the right subtree (or right most node of the left subtree).
+- b) Copy the value from that node to the current node that needs to be deleted.
+- c) DO NOT remove the current node. Instead, delete the node from a). (leftmost of the right subtree, or rightmost of the leftsubtree)
+
+After the (leftmost of the right subtree, or rightmost of the leftsubtree) is deleted, we recursive up. While doing so, we update the height and balance, and correct any imbalances.
 
 ![BST Deletion](http://chineseruleof8.com/wp-content/uploads/2016/06/bst_deletion-739x1024.jpg)
