@@ -11,7 +11,7 @@ npm test
 
 You should see the results of the passed tests:
 
-![Test Results](http://chineseruleof8.com/wp-content/uploads/2016/06/avl-tree-test.png)
+![Test Results](http://chineseruleof8.com/code/wp-content/uploads/2016/06/avl-tree-test.png)
 
 reference:
 https://www.geeksforgeeks.org/avl-tree-set-1-insertion/
