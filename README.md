@@ -64,7 +64,7 @@ If they are, we need to rotate them accordingly.
 So we have an imbalance at node 70. It has a balance of +2.
 Simply rotate the RIGHT most node (which is largest) down. Then hang the RIGHT subtree of the middle node onto the LEFT side of the RIGHT most node. 
 
-![Rotate /](http://chineseruleof8.com/wp-content/uploads/2016/06/rotation.jpg)
+![Rotate /](http://chineseruleof8.com/code/wp-content/uploads/2016/06/rotation.jpg)
 
 
 ### To rotate '<':
