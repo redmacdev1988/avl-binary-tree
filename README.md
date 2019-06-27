@@ -40,7 +40,7 @@ Thus, the height of a node, is how many vertices it has.
 You calculate the height of the node by +1 to the height of its child with the bigger height.
 Also, note that if you only have one node, its children are null and null. make sure to return -1 from these nulls so that the height of the node is 1 + - 1 = 0.
 
-![Test Results](http://chineseruleof8.com/wp-content/uploads/2016/06/subtree-height-e1555899574856.jpg)
+![Test Results](http://chineseruleof8.com/code/wp-content/uploads/2016/06/subtree-height-e1555899574856.jpg)
 
 - update node's balance. 
 
@@ -54,7 +54,7 @@ Imbalance means the current node's balance >= 2 or balance <= -2.
 If the node's balance is 2, this means there the left subtree is heavy. We then check to see if that subtree is heavy on the left or right. The whole purpose of this is to check if the nodes are in the shape of
 '/' or '<'.
 
-![Check for Imbalance](http://chineseruleof8.com/wp-content/uploads/2016/06/imbalance-e1555903534602.jpg)
+![Check for Imbalance](http://chineseruleof8.com/code/wp-content/uploads/2016/06/imbalance-e1555903534602.jpg)
 
 
 If they are, we need to rotate them accordingly. 
@@ -69,18 +69,18 @@ Simply rotate the RIGHT most node (which is largest) down. Then hang the RIGHT s
 
 ### To rotate '<':
 
-![Rotate <](http://chineseruleof8.com/wp-content/uploads/2016/06/less-than-correct-balance.jpg)
+![Rotate <](http://chineseruleof8.com/code/wp-content/uploads/2016/06/less-than-correct-balance.jpg)
 
 ### To rotate '\\':
 
-![Rotate \\](http://chineseruleof8.com/wp-content/uploads/2016/06/rotate.jpg )
+![Rotate \\](http://chineseruleof8.com/code/wp-content/uploads/2016/06/rotate.jpg )
 
 We have an imbalance at node 70.. It has a balance of -2.
 Simply rotate the LEFT most node (which is largest) down. Then hang the LEFT subtree of the middle node (60) onto the RIGHT side of the LEFT most node. 
 
 ### To rotate '>':
 
-![Rotate >](http://chineseruleof8.com/wp-content/uploads/2016/06/more-than-correct-balance-754x1024.jpg)
+![Rotate >](http://chineseruleof8.com/code/wp-content/uploads/2016/06/more-than-correct-balance-754x1024.jpg)
 
 
 > Keep in mind that after the rotation, we need to recalculate the height of the two nodes that have been rotated. This time, you cannot simply use max(left, right) + 1. You must do a recusive calculation of the height.
@@ -100,7 +100,7 @@ Thus, each insertion is O( log n )
 
 Standard BST deletion involves 4 situations:
 
-![Rotate >](http://chineseruleof8.com/wp-content/uploads/2016/06/more-than-correct-balance.jpg)
+![Rotate >](http://chineseruleof8.com/code/wp-content/uploads/2016/06/more-than-correct-balance.jpg)
 
 1) If there is no children, we just return null and propogate back up the recursion. The previous reference will point to null.
 
@@ -116,4 +116,4 @@ Standard BST deletion involves 4 situations:
 
 After the (leftmost of the right subtree, or rightmost of the leftsubtree) is deleted, we recursive up. While doing so, we update the height and balance, and correct any imbalances.
 
-![BST Deletion](http://chineseruleof8.com/wp-content/uploads/2016/06/bst_deletion-739x1024.jpg)
+![BST Deletion](http://chineseruleof8.com/code/wp-content/uploads/2016/06/bst_deletion-739x1024.jpg)
