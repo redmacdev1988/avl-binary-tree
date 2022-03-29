@@ -1,5 +1,21 @@
 # AVL Binary search tree
 
+
+## Typescript version
+
+cd into AVLTree-typescript folder.
+
+Open the directory with Visual Code.
+
+In Visual Code, open up the terminal (Ctrl + `). 
+Type 'tsc' in order to compile the typescript into JS code. It will appear in the dist folder.
+
+The project has a launch.json file. Now you can put break points in the code and start the debug session by selecting:
+Run > Start Debugging.
+
+![Debug Typescript](http://chineseruleof8.com/code/wp-content/uploads/2022/03/avl-typescript-debug.png)
+
+## JS version (outdated)
 ### Running Tests
 
 After you have cloned the project, in the root directory, install the modules, then run the tests:
