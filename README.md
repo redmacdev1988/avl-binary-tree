@@ -13,7 +13,7 @@ Type 'tsc' in order to compile the typescript into JS code. It will appear in th
 The project has a launch.json file. Now you can put break points in the code and start the debug session by selecting:
 Run > Start Debugging.
 
-![Debug Typescript](http://chineseruleof8.com/code/wp-content/uploads/2022/03/avl-typescript-debug.png)
+![Debug Typescriptgit](http://chineseruleof8.com/code/wp-content/uploads/2022/03/avl-typescript-debug.png)
 
 ## JS version (outdated)
 ### Running Tests
