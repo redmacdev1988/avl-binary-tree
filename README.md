@@ -3,12 +3,9 @@
 
 ## Typescript version
 
-cd into AVLTree-typescript folder.
+In the main directory, run 'tsc' to compile ts files and output dist folder with js files
 
-Open the directory with Visual Code.
-
-In Visual Code, open up the terminal (Ctrl + `). 
-Type 'tsc' in order to compile the typescript into JS code. It will appear in the dist folder.
+Run 'npm test' to run all tests.
 
 The project has a launch.json file. Now you can put break points in the code and start the debug session by selecting:
 Run > Start Debugging.
