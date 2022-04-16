@@ -1,0 +1,80 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const AVLTree_1 = require("./AVLTree/AVLTree");
+const tree = new AVLTree_1.AVLTree(null, "Ricky's implementation", "AVL Tree - 4 rotations for self balancing BTree");
+tree.insert(50);
+tree.insert(60);
+tree.insert(70);
+tree.insert(80);
+tree.insert(90);
+tree.insert(100);
+console.log(tree.balance()); // 0
+console.log(tree.height()); // 2
+console.log(tree.rootValue()); // 88
+console.log('end');
+// insert test cases //
+// tree.insert(20);
+// tree.insert(4);
+// tree.insert(26);
+// tree.insert(3);
+// tree.insert(9);
+// tree.insert(21);
+// tree.insert(30);
+// tree.insert(2);
+// tree.insert(7);
+// tree.insert(11);
+// tree.insert(8);
+// tree.insert(20);
+// tree.insert(4);
+// tree.insert(26);
+// tree.insert(3);
+// tree.insert(9);
+// tree.insert(8);
+// tree.insert(20);
+// tree.insert(4);
+// tree.insert(8);
+// tree.insert(50);
+// tree.insert(100);
+// tree.insert(20);
+// tree.insert(30);
+// tree.insert(10);
+// tree.insert(40);
+// tree.insert(15);
+// tree.insert(2);
+// tree.insert(1);
+// tree.insert(30);
+// tree.insert(20);
+// tree.insert(25);
+// tree.insert(40);
+// tree.insert(30);
+// tree.insert(50);
+// tree.insert(35); // this node should be hanging to the left of 40
+// tree.insert(20);
+// tree.insert(10);
+// tree.insert(5);
+// tree.insert(2);
+// tree.insert(1);
+// tree.insert(40);
+// tree.insert(30);
+// tree.insert(50);
+// tree.insert(35); // this node should be hanging to the left of 40
+// tree.insert(20);
+// tree.insert(10);
+// tree.insert(50);
+// tree.insert(40);
+// tree.insert(30);
+// tree.insert(20);
+// tree.insert(10);
+// tree.insert(50);
+// tree.insert(40);
+// tree.insert(30);
+// tree.insert(60);
+// tree.insert(70);
+// tree.insert(45);
+// tree.insert(55);
+// tree.insert(97);
+// tree.insert(98);
+// tree.insert(99);
+// tree.insert(96);
+// tree.insert(95);
+//# sourceMappingURL=app.js.map
