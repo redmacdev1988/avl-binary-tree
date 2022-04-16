@@ -7,7 +7,7 @@ In the main directory, run 'tsc' to compile ts files and output dist folder with
 
 Run 'npm test' to run all tests.
 
-The project has a launch.json file. Now you can put break points in the code and start the debug session by selecting:
+The project has a launch.json file. Now you can put break points in src/app.ts and start the debug session by selecting:
 Run > Start Debugging.
 
 ![Debug Typescriptgit](http://chineseruleof8.com/code/wp-content/uploads/2022/03/avl-typescript-debug.png)
